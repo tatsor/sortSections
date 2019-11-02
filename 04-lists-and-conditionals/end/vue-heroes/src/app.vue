@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <HeaderBar />
+    <!-- <HeaderBar /> -->
     <div class="main-section columns">
       <main class="column">
         <Heroes />
@@ -11,7 +11,7 @@
 
 <script>
 import HeaderBar from '@/components/header-bar';
-import Heroes from '@/components/heroes';
+import Heroes from '@/components/qlSections';
 
 export default {
   name: 'App',
