@@ -1,15 +1,17 @@
-export const actions = {
+'use strict'
+
+const actions = {
     UP: 'up',
     DOWN: 'down',
     HIDE: 'hide',
     RESTORE: 'restore',
     DELETE: 'delete',
     ADD: 'add'
-}
+};
 
-export const HIDDEN_SECTIONS_START_INDEX = 10000;
+const HIDDEN_SECTIONS_START_INDEX = 10000;
 
-export function sortArray(sectionsArray, section, action) {
+function sortArray(sectionsArray, section, action) {
     const index = findWithAttr(sectionsArray, 'order', section.order);
     console.log('Index', index);
     switch (action) {
@@ -45,6 +47,7 @@ export function sortArray(sectionsArray, section, action) {
         case (actions.RESTORE):
             if(section.order >= HIDDEN_SECTIONS_START_INDEX) {
                 const hiddenSectionIndex = findFirstHiddenSection(sectionsArray);
+                console.log('hidden section index: ', hiddenSectionIndex);
                 if (hiddenSectionIndex > -1) {
                     sectionsArray.splice(index, 1);
                     sectionsArray.splice(hiddenSectionIndex, 0, section);
@@ -86,11 +89,13 @@ export function sortArray(sectionsArray, section, action) {
 
 function swap(array, index1, index2) {
     console.log('In swap, index 1 %s, index 2 %s', index1, index2);
-    var tmp = array[index1];
-    array[index1] = array[index2];
-    array[index1].order = index1 + 1;
-    array[index2] = tmp;
-    array[index2].order = index2 + 1;
+    if (index2 >=0 && index1 >=0 && index1 < array.length && index2 < array.length) {
+        var tmp = array[index1];
+        array[index1] = array[index2];
+        array[index1].order = index1 + 1;
+        array[index2] = tmp;
+        array[index2].order = index2 + 1;
+    }
 }
 
 function findWithAttr(array, attr, value) {
@@ -123,5 +128,11 @@ function removeEnabledSection(array, index, order) {
             }
         }
     }
+}
+
+module.exports = {
+    actions,
+    sortArray,
+    HIDDEN_SECTIONS_START_INDEX
 }
 
